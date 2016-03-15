@@ -1,0 +1,269 @@
+{
+  "rules": {
+    "user_question_banks": {
+      "$userid": {
+        "$questionBankUniqueID": {
+          ".validate": "newData.hasChildren(['member-type'])",
+          "member-type": {
+            ".validate": "newData.isNumber() && (newData.val() == 1 || newData.val() == 2)"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "question_bank_memberships": {
+      "$questionBankUniqueID": {
+        "$UserID": {
+          ".validate": "newData.hasChildren(['member-type'])",
+          "member-type": {
+            ".validate": "newData.isNumber() && (newData.val() == 1 || newData.val() == 2)"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "question_bank": {
+      "$questionBankUniqueID": {
+        ".validate": "newData.hasChildren(['timestamp', 'title', 'desc'])",
+        "timestamp": {
+          ".validate": "newData.isNumber() && newData.val() <= Date.now"
+        },
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "desc": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      }
+    },
+    "question_bank_topics": {
+      "$questionBankUniqueID": {
+        "$autotopicid1": {
+          "subtopics": {
+            "$autoSubTopicID": {
+              ".validate": "newData.hasChildren(['timestamp', 'title', 'desc', 'question'])",
+              "timestamp": {
+                ".validate": "newData.isNumber() && newData.val() <= Date.now"
+              },
+              "title": {
+                ".validate": "newData.isString()"
+              },
+              "desc": {
+                ".validate": "newData.isString()"
+              },
+              "question": {
+                ".validate": "newData.hasChildren(['questionID'])",
+                "questionID": {
+                  ".validate": "newData.isBoolean()"
+                },
+                "$other": {
+                  ".validate": "false"
+                }
+              },
+              "$other": {
+                ".validate": "false"
+              }
+            }
+          },
+          ".validate": "newData.hasChildren(['timestamp', 'title', 'desc', 'question', 'subtopics'])",
+          "timestamp": {
+            ".validate": "newData.isNumber() && newData.val() <= Date.now"
+          },
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "desc": {
+            ".validate": "newData.isString()"
+          },
+          "question": {
+            ".validate": "newData.hasChildren(['questionID'])",
+            "questionID": {
+              ".validate": "newData.isBoolean()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "question_bank_quizes": {
+      "$questionBankID": {
+        ".validate": "newData.hasChildren()",
+        "$quizID": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    "group_quizes": {
+      "$groupID": {
+        ".validate": "newData.hasChildren()",
+        "$quizID": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    "quizes": {
+      "$quizID": {
+        ".validate": "newData.hasChildren(['title', 'desc', 'duration', 'num-questions'])",
+        "title": {
+          ".validate": "newData.isString()"
+        },
+        "desc": {
+          ".validate": "newData.isString()"
+        },
+        "duration": {
+          ".validate": "newData.isNumber()"
+        },
+        "num-questions": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      }
+    },
+    "quiz-topics": {
+      "$quizID": {
+        "$autotopicID": {
+          "subtopics": {
+            "$autoSubTopicID": {
+              ".validate": "newData.hasChildren(['timestamp', 'title', 'desc', 'question'])",
+              "timestamp": {
+                ".validate": "newData.isNumber() && newData.val() <= Date.now"
+              },
+              "title": {
+                ".validate": "newData.isString()"
+              },
+              "desc": {
+                ".validate": "newData.isString()"
+              },
+              "question": {
+                ".validate": "newData.hasChildren(['questionID'])",
+                "questionID": {
+                  ".validate": "newData.isBoolean()"
+                },
+                "$other": {
+                  ".validate": "false"
+                }
+              },
+              "$other": {
+                ".validate": "false"
+              }
+            }
+          },
+          ".validate": "newData.hasChildren(['timestamp', 'title', 'desc', 'subtopics'])",
+          "timestamp": {
+            ".validate": "newData.isNumber() && newData.val() <= Date.now"
+          },
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "desc": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "quiz_questions": {
+      "$quizID": {
+        "$questionID": {
+          ".validate": "newData.hasChildren(['title', 'type', 'desc', 'options'])",
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "type": {
+            ".validate": "newData.isNumber() && 'newData.isNumber() && (newData.val() == 1 || newData.val() == 2 || newData.val() == 3)'"
+          },
+          "desc": {
+            ".validate": "newData.isString()"
+          },
+          "options": {
+            ".validate": "newData.hasChildren(['OptionID'])",
+            "OptionID": {
+              ".validate": "newData.isBoolean()"
+            },
+            "$other": {
+              ".validate": "false"
+            }
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "quiz-answers": {
+      "$quizID": {
+        "$questionID": {
+          "options": {
+            "$optionID": {
+              ".validate": "newData.hasChildren(['html', 'correct', 'discussion-html'])",
+              "html": {
+                ".validate": "newData.isString()"
+              },
+              "correct": {
+                ".validate": "newData.isBoolean()"
+              },
+              "discussion-html": {
+                ".validate": "newData.isString()"
+              },
+              "$other": {
+                ".validate": "false"
+              }
+            }
+          },
+          ".validate": "newData.hasChildren(['title', 'type', 'desc-html', 'discussion-html', 'options'])",
+          "title": {
+            ".validate": "newData.isString()"
+          },
+          "type": {
+            ".validate": "newData.isNumber() && 'newData.isNumber() && (newData.val() == 1 || newData.val() == 2 || newData.val() == 3)'"
+          },
+          "desc-html": {
+            ".validate": "newData.isString()"
+          },
+          "discussion-html": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "quiz_answer_sheet": {
+      "$groupid": {
+        "$quizid": {
+          "$userid": {
+            "$questionId": {
+              ".validate": "newData.hasChildren(['optionID', 'correct'])",
+              "optionID": {
+                ".validate": "newData.isBoolean()"
+              },
+              "correct": {
+                ".validate": "newData.isBoolean()"
+              },
+              "$other": {
+                ".validate": "false"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+path /user_question_banks/{userid}/{questionBankUniqueID} is Post {
+
+}
+
+path /question_bank_memberships/{questionBankUniqueID}/{UserID} is Post {
+
+}
+
+type Post {
+
+  "member-type": MembershipType
+
+  }
+type MembershipType extends Number {
+
+  validate() { newData.val() == 1 || newData.val() == 2 }
+
+}
+
+path /question_bank/{questionBankUniqueID} is Post1{}
+
+type Post1
+{
+timestamp : CurrentTimeStamp,
+
+ title : String,
+ desc : String,
+
+}
+type CurrentTimeStamp extends Number{
+validate() {newData.val() <= Date.now}
+}
+path /question_bank_topics/{questionBankUniqueID}/{autotopicid1} is Post2{
+     /subtopics/{autoSubTopicID}  is Post3 {
+
+     }
+       validate() {this.hasChildren(["subtopics"])}
+}
+
+type Post2
+{
+timestamp : CurrentTimeStamp
+title : String
+desc : String
+question : QuestionID
+}
+  type Post3{
+         timestamp : CurrentTimeStamp
+         title : String
+         desc : String
+         question : QuestionID
+}
+type QuestionID {
+    questionID : Boolean
+}
+
+
+path /question_bank_quizes/{questionBankID} is Post5{}
+
+type Post5{
+ $quizID : Boolean
+
+}
+
+path /group_quizes/{groupID} is Post5{}
+
+path /quizes/{quizID} is Post6{}
+
+ type Post6{
+ title : String,
+ desc : String,
+ duration : Number,
+ "num-questions" : Number,
+}
+path /quiz-topics/{quizID}/{autotopicID} is Post7{
+ /subtopics/{autoSubTopicID}  is Post3 {
+
+      }
+        validate() {this.hasChildren(["subtopics"])}
+}
+
+
+type Post7{
+timestamp : CurrentTimeStamp
+title : String
+desc : String
+
+}
+path /quiz_questions/{quizID}/{questionID} is Post8{}
+type Post8 {
+title : String
+type : TypeCode
+desc : String
+options : OptionID
+}
+ type TypeCode extends Number {
+ validate()  {"newData.isNumber() && (newData.val() == 1 || newData.val() == 2 || newData.val() == 3)"}
+ }
+ type OptionID {
+     OptionID : Boolean
+ }
+
+ path /quiz-answers/{quizID}/{questionID} is Post9{
+ /options/{optionID}  is Post10 { }
+    validate() {this.hasChildren(["options"])}
+    }
+ type Post9{
+ title: String
+ type : TypeCode
+ "desc-html": String
+ "discussion-html" : String
+ }
+
+ type Post10{
+ html : String
+ correct : Boolean
+ "discussion-html" : String
+
+ }
+
+ path /quiz_answer_sheet/{groupid}/{quizid}/{userid}/{questionId} is Post11{}
+ type Post11{
+ optionID : Boolean
+ correct : Boolean
+ }
