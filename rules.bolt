@@ -1,12 +1,12 @@
-path /user_question_banks/{userid}/{questionBankUniqueID} is Post {
+path /user-question-banks/{userid}/{questionBankUniqueID} is UserQuestionBankType {
 
 }
 
-path /question_bank_memberships/{questionBankUniqueID}/{UserID} is Post {
+path /question-bank-memberships/{questionBankUniqueID}/{UserID} is UserQuestionBankType {
 
 }
 
-type Post {
+type UserQuestionBankType {
 
   "member-type": MembershipType
 
@@ -17,9 +17,9 @@ type MembershipType extends Number {
 
 }
 
-path /question_bank/{questionBankUniqueID} is Post1{}
+path /question-bank/{questionBankUniqueID} is TimeQuestionBankType{}
 
-type Post1
+type TimeQuestionBankType
 {
 timestamp : CurrentTimeStamp,
 
@@ -30,21 +30,21 @@ timestamp : CurrentTimeStamp,
 type CurrentTimeStamp extends Number{
 validate() {newData.val() <= Date.now}
 }
-path /question_bank_topics/{questionBankUniqueID}/{autotopicid1} is Post2{
-     /subtopics/{autoSubTopicID}  is Post3 {
+path /question-bank-topics/{questionBankUniqueID}/{autotopicid1} is QuestionBankTopicType{
+     /subtopics/{autoSubTopicID}  is QuestionBankSubtopicType {
 
      }
        validate() {this.hasChildren(["subtopics"])}
 }
 
-type Post2
+type QuestionBankTopicType
 {
 timestamp : CurrentTimeStamp
 title : String
 desc : String
 question : QuestionID
 }
-  type Post3{
+  type QuestionBankSubtopicType{
          timestamp : CurrentTimeStamp
          title : String
          desc : String
@@ -55,39 +55,39 @@ type QuestionID {
 }
 
 
-path /question_bank_quizes/{questionBankID} is Post5{}
+path /question-bank-quizes/{questionBankID} is QuestionBankQuizType{}
 
-type Post5{
+type QuestionBankQuizType{
  $quizID : Boolean
 
 }
 
-path /group_quizes/{groupID} is Post5{}
+path /group-quizes/{groupID} is QuestionBankQuizType{}
 
-path /quizes/{quizID} is Post6{}
+path /quizes/{quizID} is QuestionBankQuiz1type{}
 
- type Post6{
+ type QuestionBankQuiz1type{
  title : String,
  desc : String,
  duration : Number,
  "num-questions" : Number,
 }
-path /quiz-topics/{quizID}/{autotopicID} is Post7{
- /subtopics/{autoSubTopicID}  is Post3 {
+path /quiz-topics/{quizID}/{autotopicID} is QuestionBankQuizAutoTopicType{
+ /subtopics/{autoSubTopicID}  is QuestionBankSubtopicType {
 
       }
         validate() {this.hasChildren(["subtopics"])}
 }
 
 
-type Post7{
+type QuestionBankQuizAutoTopicType{
 timestamp : CurrentTimeStamp
 title : String
 desc : String
 
 }
-path /quiz_questions/{quizID}/{questionID} is Post8{}
-type Post8 {
+path /quiz-questions/{quizID}/{questionID} is QuestionBankQuiz3Type{}
+type QuestionBankQuiz3Type {
 title : String
 type : TypeCode
 desc : String
@@ -100,26 +100,26 @@ options : OptionID
      OptionID : Boolean
  }
 
- path /quiz-answers/{quizID}/{questionID} is Post9{
- /options/{optionID}  is Post10 { }
+ path /quiz-answers/{quizID}/{questionID} is QuestionBankAnswerType{
+ /options/{optionID}  is QuestionBankAnswerOptionType { }
     validate() {this.hasChildren(["options"])}
     }
- type Post9{
+ type QuestionBankAnswerType{
  title: String
  type : TypeCode
  "desc-html": String
  "discussion-html" : String
  }
 
- type Post10{
+ type QuestionBankAnswerOptionType{
  html : String
  correct : Boolean
  "discussion-html" : String
 
  }
 
- path /quiz_answer_sheet/{groupid}/{quizid}/{userid}/{questionId} is Post11{}
- type Post11{
+ path /quiz-answer-sheet/{groupid}/{quizid}/{userid}/{questionId} is QuestionBankAnswerCheckType{}
+ type QuestionBankAnswerCheckType{
  optionID : Boolean
  correct : Boolean
  }
